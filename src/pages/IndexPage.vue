@@ -1,14 +1,3 @@
-<!-- <template>
-  <h1>salom quasar</h1>
-</template>
-
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "IndexPage",
-});
-</script> -->
 <template>
   <div id="home">
     <div class="container">
@@ -169,7 +158,6 @@ function addProduct() {
     .onDismiss(() => {});
 }
 function editProduct(product) {
-  console.log(product);
   $q.dialog({
     component: MyModal,
     componentProps: {
@@ -181,7 +169,6 @@ function editProduct(product) {
     },
   })
     .onOk((value) => {
-      console.log(value);
       api
         .put("/product/", {
           id: product.id,

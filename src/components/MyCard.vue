@@ -60,12 +60,9 @@
 const prop = defineProps(["product", "product_types"]);
 const emit = defineEmits(["deleteProduct", "editProduct"]);
 function getProductType(product_type_id) {
-  // console.log(product_type_id);
   let res = "";
   prop.product_types.forEach((item) => {
     if (item.id == product_type_id) {
-      console.log(item.name_uz);
-      // return item.name_uz;
       res = item.name_uz;
     }
   });

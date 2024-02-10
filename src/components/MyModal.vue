@@ -2,7 +2,6 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin q-gutter-md">
       <h6>Добавить продукт</h6>
-      <!-- :model-value="props.prop_name" -->
       <q-input
         :autofocus="true"
         v-model="name"
@@ -10,14 +9,12 @@
         input-class="no-border q-pa-sm"
         label="Название"
       />
-      <!-- :model-value="props.prop_address" -->
       <q-input
         v-model="address"
         class="q-pa-sm"
         input-class="no-border q-pa-sm"
         label="Адрес"
       />
-      <!-- :model-value="props.prop_cost" -->
       <q-input
         v-model="cost"
         type="number"
@@ -25,7 +22,6 @@
         input-class="no-border q-pa-sm"
         label="Цена"
       />
-      <!-- :model-value="props.type" -->
       <q-select
         v-model="product_type"
         :options="listOptions"
@@ -34,7 +30,6 @@
         transition-show="scale"
         transition-hide="scale"
       />
-      <!-- buttons example -->
       <q-card-actions align="right">
         <q-btn color="primary" label="OK" @click="onOKClick" />
         <q-btn color="primary" label="Cancel" @click="onDialogCancel" />
@@ -60,8 +55,6 @@ const props = defineProps([
 name.value = props.prop_name;
 address.value = props.prop_address;
 cost.value = props.prop_cost;
-// product_type.value = props.type;
-
 const listOptions = [];
 props.prop_product_types.forEach((item) => {
   if (props.type_id && props.type_id == item.id) {
@@ -71,7 +64,6 @@ props.prop_product_types.forEach((item) => {
       selected: true,
     };
   }
-  console.log("else");
   listOptions.push({
     label: item.name_uz,
     value: item.id,

@@ -57,7 +57,6 @@ import { RouterLink } from "vue-router";
 const menuLinks = ref(null);
 const menuModal = ref(null);
 window.onclick = function (event) {
-  // console.log(event);
   if (event.target == menuModal.value) {
     menuModal.value.style.display = "none";
     menuLinks.value.style.display = "none";
