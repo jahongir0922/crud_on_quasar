@@ -1,7 +1,6 @@
 // app global css in SCSS form
 @import "./base";
 @import "./variables";
-// @import "./mixins";
 @import "./breakpoints";
 @import "../assets/fonts/font.css";
 * {
@@ -76,8 +75,8 @@ input {
   }
 }
 .delete_icon {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +91,8 @@ input {
 }
 
 .edit_icon {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -142,5 +141,123 @@ input {
   }
   @include media("<=tablet") {
     width: 100%;
+  }
+}
+.cards {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  @include media("<=tablet") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media("<=600px") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media("<=phone") {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: $white_blue;
+    border-radius: 30px;
+    img {
+      width: 100%;
+    }
+    > h3 {
+      font-weight: 600;
+      font-size: 16px;
+      color: #22253b;
+      text-align: center;
+      @include media("<=600px") {
+        font-size: 13px;
+      }
+    }
+    > div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      > p {
+        font-weight: 400;
+        font-size: 13px;
+        color: #22253b;
+        text-align: center;
+      }
+    }
+  }
+}
+#home {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 25px 0;
+  align-items: center;
+  background-color: #f9f8fd;
+  #section1 {
+    background-color: #ffffff;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    align-items: center;
+    padding: 20px;
+    .paginate {
+      display: flex;
+      justify-content: center;
+    }
+    > div {
+      width: 100%;
+
+      > h1 {
+        font-weight: 600;
+        font-size: 46px;
+        color: #22253b;
+        @include media("<=1000px") {
+          font-size: 34px;
+        }
+        @include media("<=tablet") {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+  .loudspeak {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    background-color: $white_blue;
+    padding: 65px;
+    border-radius: 30px;
+    @include media("<=tablet") {
+      flex-direction: column;
+      padding: 25px;
+    }
+    img {
+      width: 90px;
+      @include media("<=tablet") {
+        width: 75px;
+      }
+    }
+    > p {
+      font-weight: 400;
+      font-size: 12px;
+      color: #22253b;
+      @include media("<=tablet") {
+        text-align: center;
+      }
+    }
+    a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
   }
 }

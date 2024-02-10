@@ -12,7 +12,10 @@ const routes = [
     path: "/sign_up",
     component: () => import("pages/SignUp.vue"),
   },
-
+  {
+    path: "/modal",
+    component: () => import("pages/Modal.vue"),
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

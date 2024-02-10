@@ -1,20 +1,47 @@
 <template>
-  <div ref="block" class="block">
+  <div class="q-pa-md">
+    <q-btn color="purple" @click="showLoading" label="Show Loading" />
+  </div>
+</template>
+
+<script>
+import { useQuasar } from "quasar";
+import { onBeforeUnmount } from "vue";
+
+export default {
+  setup() {
+    const $q = useQuasar();
+    let timer;
+
+    onBeforeUnmount(() => {
+      if (timer !== void 0) {
+        clearTimeout(timer);
+        $q.loading.hide();
+      }
+    });
+
+    return {
+      showLoading() {
+        $q.loading.show();
+
+        // hiding in 2s
+        timer = setTimeout(() => {
+          $q.loading.hide();
+          timer = void 0;
+        }, 2000);
+      },
+    };
+  },
+};
+</script>
+
+<!-- <template>
+  <div class="block">
     <div id="nest2"></div>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-// const block = ref(null)
-// function display_flex() {
-//   block.value.style.display = 'flex'
-// }
-// function display_none() {
-//   block.value.style.display = 'none'
-// }
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 * {
@@ -26,13 +53,18 @@ import { ref } from 'vue'
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 100vh;
   background-color: #00000022;
   z-index: 10;
+}
+.sample {
+  width: 500px;
+  height: 50px;
+  border: 1px solid red;
 }
 
 /* ======= PreLoader CSS Start  ========*/
@@ -51,7 +83,7 @@ import { ref } from 'vue'
 }
 
 #nest2:before {
-  content: '';
+  content: "";
   position: absolute;
   top: 21px;
   right: 21px;
@@ -66,7 +98,7 @@ import { ref } from 'vue'
 }
 
 #nest2:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 45px;
   right: 45px;
@@ -104,4 +136,4 @@ import { ref } from 'vue'
     transform: rotate(359deg);
   }
 }
-</style>
+</style> -->
