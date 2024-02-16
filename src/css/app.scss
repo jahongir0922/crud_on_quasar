@@ -29,12 +29,15 @@
   width: 100px;
   border-radius: 5px;
 }
+// .grid-style-transition {
+//   transition: transform 0.28s, background-color 0.28s;
+// }
 .icon_add {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  width: 50px;
+  height: 30px;
+  width: 30px;
   background-color: $blue_btn;
   border-radius: 50%;
   &:hover {
@@ -44,8 +47,8 @@
     background-color: $blue_btn;
   }
   img {
-    width: 25px;
-    height: 25px;
+    width: 15px;
+    height: 15px;
   }
 }
 .justify_between {

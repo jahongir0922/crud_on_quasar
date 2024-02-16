@@ -3,50 +3,59 @@
     <div class="container">
       <MyHeader />
     </div>
-    <div class="container" id="section1">
-      <div class="justify_between">
-        <h1>Продукты</h1>
-        <span @click="addProduct()" title="Add product" class="icon_add">
-          <img src="../assets/images/svg_icon/add.svg" alt="" />
-        </span>
+    <div class="q-pa-md container" id="section1">
+      <div class="q-pa-md">
+        <q-table
+          title="Products"
+          :rows="products"
+          row-key="name"
+          :filter="filter"
+          grid
+          hide-header
+        >
+          <template v-slot:top-right>
+            <q-input
+              borderless
+              dense
+              debounce="300"
+              v-model="filter"
+              placeholder="Search"
+            >
+              <template v-slot:append>
+                <q-icon name="search" />
+                <span
+                  @click="addProduct()"
+                  title="Add product"
+                  class="icon_add"
+                >
+                  <img src="../assets/images/svg_icon/add.svg" alt="" />
+                </span>
+              </template>
+            </q-input>
+          </template>
+
+          <template v-slot:item="props">
+            <div
+              class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
+            >
+              <MyCard
+                :product="props"
+                :product_types="product_types"
+                @edit-product="
+                  (product) => {
+                    editProduct(product);
+                  }
+                "
+                @delete-product="
+                  (product_id) => {
+                    deleteProduct(product_id);
+                  }
+                "
+              />
+            </div>
+          </template>
+        </q-table>
       </div>
-      <TransitionGroup
-        class="cards"
-        name="list"
-        tag="div"
-        appear=""
-        @before-enter="beforeEnter"
-        @enter="enter"
-      >
-        <MyCard
-          v-for="(product, index) in products"
-          :key="index"
-          :product="product"
-          :product_types="product_types"
-          :data-index="index"
-          @edit-product="
-            (product) => {
-              editProduct(product);
-            }
-          "
-          @delete-product="
-            (product_id) => {
-              deleteProduct(product_id);
-            }
-          "
-      /></TransitionGroup>
-      <q-pagination
-        class="paginate"
-        v-model="currentPage"
-        :max="5"
-        direction-links
-        boundary-links
-        icon-first="skip_previous"
-        icon-last="skip_next"
-        icon-prev="fast_rewind"
-        icon-next="fast_forward"
-        @click="onClickHandler"
-      ></q-pagination>
     </div>
     <div class="loudspeak container">
       <img src="../assets/images/svg_icon/loudspeaker.svg" alt="" />
@@ -70,54 +79,21 @@ import MyHeader from "../components/MyHeader.vue";
 import MyFooter from "../components/MyFooter.vue";
 import MyCard from "../components/MyCard.vue";
 import { ref } from "vue";
-import { gsap } from "gsap";
 import { api } from "../boot/axios.js";
 import { useQuasar } from "quasar";
 import MyModal from "src/components/MyModal.vue";
 const $q = useQuasar();
-const preloader = ref(false);
 const products = ref([]);
 const product_types = ref([]);
-////pagination
-const onClickHandler = (page) => {
-  get_products();
-};
-const totalItems = ref(100);
-const currentPage = ref(1);
-const perPage = ref(12);
-////end pagination
-///transition
-const beforeEnter = (el) => {
-  el.style.opacity = 0;
-  el.style.transform = "translateY(100px)";
-};
-const enter = (el, done) => {
-  gsap.to(el, {
-    opacity: 1,
-    y: 0,
-    duration: 0.1,
-    onComplete: done,
-    delay: el.dataset.index * 0.2,
-  });
-};
-///end transition
+const filter = ref("");
 function get_products() {
-  preloader.value = true;
   products.value = [];
   api
-    .get(`/product/?page=${currentPage.value}&perPage=${perPage.value}`)
+    .get(`/product/`)
     .then((res) => {
-      preloader.value = false;
       products.value = res.data;
-      if (
-        res.data.length == perPage.value &&
-        perPage.value * currentPage.value == totalItems.value
-      ) {
-        totalItems.value += perPage.value;
-      }
     })
     .catch((err) => {
-      preloader.value = false;
       console.log(err.message);
       products.value = res.data;
     });
@@ -197,9 +173,6 @@ function editProduct(product) {
     .onDismiss(() => {});
 }
 function deleteProduct(product_id) {
-  // for (let i = 0; i < products.value.length; i++) {
-  //   api.delete(`/product/${products.value[i].id}`);
-  // }
   $q.dialog({
     title: "Вы уверены?",
     message: "Вы не сможете это вернуть!",
@@ -212,6 +185,7 @@ function deleteProduct(product_id) {
         const dialog = $q.dialog({
           title: "Удален",
           message: `Ваш файл был удален!`,
+          ok: false,
         });
         const timer = setInterval(() => {
           seconds--;
@@ -237,15 +211,12 @@ function deleteProduct(product_id) {
   });
 }
 function get_product_types() {
-  preloader.value = true;
   api
     .get("/product/get-product-types")
     .then((res) => {
-      preloader.value = false;
       product_types.value = [...res.data];
     })
     .catch((err) => {
-      preloader.value = false;
       console.log(err.message);
     });
 }
